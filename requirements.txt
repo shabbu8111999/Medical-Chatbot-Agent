@@ -1,0 +1,14 @@
+sentence-transformers==4.1.0
+huggingface-hub>=0.20.0
+langchain==0.3.26
+flask
+pypdf
+python-dotenv
+pinecone[grpc]==7.2.0
+langchain-pinecone
+langchain_community
+langchain_openai
+langchain_experimental
+transformers
+torch
+-e .
