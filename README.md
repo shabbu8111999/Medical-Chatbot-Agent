@@ -1,7 +1,5 @@
 # Medical-Chatbot-Agent
 
-# Medical-Chabot-AI
-
 ### Steps
 
 Clone the Repository

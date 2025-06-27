@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Medical Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="chat-wrapper">
+        <header class="chat-header">
+            🧬 MedBot - AI Healthcare Assistant
+        </header>
+
+        <main class="chat-window" id="chat-box">
+            <!-- Messages will appear here -->
+        </main>
+
+        <form class="chat-input" onsubmit="event.preventDefault(); sendMessage();">
+            <input type="text" id="user-input" placeholder="Describe your symptoms or ask a medical question...">
+            <button type="submit">➤</button>
+        </form>
+    </div>
+
+    <script>
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        addMessage('user', message);
+        userInput.value = '';
+
+        fetch("/get", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `msg=${encodeURIComponent(message)}`,
+        })
+        .then((response) => response.text())
+        .then((reply) => {
+            addMessage("bot", `🤖 MedBot: ${reply}`);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            addMessage("bot", "Sorry, something went wrong!");
+        });
+    }
+
+    function addMessage(sender, text) {
+        const msg = document.createElement('div');
+        msg.classList.add('message', sender);
+        msg.textContent = text;
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+</script>
+</body>
+</html>
